@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment.prod';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
@@ -8,10 +9,14 @@ import { environment } from '../../../environments/environment.prod';
   styleUrls: ['./login-form.component.css']
 })
 export class LoginFormComponent {
-  constructor(private http: HttpClient){}
+  constructor(
+    private http: HttpClient,
+    private router: Router){}
 
   username: string = "";
   password: string = "";
+  jwt_token: string = "";
+  
   show: boolean = false;
   submit() {
     const body = {
@@ -22,7 +27,8 @@ export class LoginFormComponent {
 
     this.http.post<any>(environment.apiUrl+'/users/login', body).subscribe(
       data => {
-        console.log(data);
+        this.jwt_token = data["access_token"];
+        this.goToCrud();
       },
       error => {alert("Username or Password are incorrect")});
     this.clear();
@@ -31,5 +37,9 @@ export class LoginFormComponent {
     this.username = "";
     this.password = "";
     this.show = true;
+  }
+
+  goToCrud() {
+    this.router.navigate(['crud']);
   }
 }
