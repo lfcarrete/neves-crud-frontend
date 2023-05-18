@@ -40,6 +40,6 @@ export class LoginFormComponent {
   }
 
   goToCrud() {
-    this.router.navigate(['crud']);
+    this.router.navigate(['crud'],  {state: {jwt: this.jwt_token}});
   }
 }

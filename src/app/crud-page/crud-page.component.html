@@ -1,1 +1,37 @@
-<p>crud-page works!</p>
+<div class="main-container">
+    <table mat-table [dataSource]="dataSource"  class="mat-elevation-z8">
+        <ng-container matColumnDef="id">
+            <th class="text" mat-header-cell *matHeaderCellDef> No. </th>
+            <td class="text" mat-cell *matCellDef="let element"> {{element.id}} </td>
+          </ng-container>
+        
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th class="text" mat-header-cell *matHeaderCellDef> Name </th>
+            <td class="text" mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="username">
+            <th class="text" mat-header-cell *matHeaderCellDef> Userame </th>
+            <td class="text" mat-cell *matCellDef="let element"> {{element.username}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="created_at">
+            <th class="text" mat-header-cell *matHeaderCellDef> Created-At </th>
+            <td class="text" mat-cell *matCellDef="let element"> {{element.created_at}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="update">
+            <th class="text" mat-header-cell *matHeaderCellDef> Edit </th>
+            <td class="text" mat-cell *matCellDef="let element"> + </td>
+          </ng-container>
+
+          <ng-container matColumnDef="delete">
+            <th class="text" mat-header-cell *matHeaderCellDef> Delete </th>
+            <td class="text" mat-cell *matCellDef="let element"> - </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+</div>
