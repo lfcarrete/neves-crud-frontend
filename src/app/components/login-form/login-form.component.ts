@@ -23,7 +23,6 @@ export class LoginFormComponent {
       username: this.username,
       password: this.password
     }
-    console.log(JSON.stringify(body))
 
     this.http.post<any>(environment.apiUrl+'/users/login', body).subscribe(
       data => {
