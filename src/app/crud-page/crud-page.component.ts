@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment.prod';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crud-page',
@@ -14,7 +15,8 @@ export class CrudPageComponent {
   dataSource: any = [];
   constructor(
     private http: HttpClient,
-    private location: Location) {
+    private location: Location,
+    private router: Router,) {
     this.jwt = this.location.getState();
   }
   public displayedColumns = ['id', 'name', 'username', 'created_at', 'update', 'delete']
@@ -35,7 +37,11 @@ export class CrudPageComponent {
       this.dataSource = this.dataSource.sort((a: any, b: any) => a.id - b.id )
     },
       error => {
-        alert("Trouble communicating with the server");
+        if(error["status"] == 401){
+          this.router.navigate(['']);
+        } else {
+          alert("Trouble communicating with the server");
+        }
       })
 
   }

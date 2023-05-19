@@ -2,3 +2,4 @@
 body{
     background: #e0ffff;
 }
+@import '~bootstrap/dist/css/bootstrap.css';
