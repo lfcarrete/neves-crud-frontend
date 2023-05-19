@@ -10,12 +10,18 @@
             <!-- Name Column -->
             <ng-container matColumnDef="name">
                 <th class="text" mat-header-cell *matHeaderCellDef> Name </th>
-                <td class="text" mat-cell *matCellDef="let element"> {{element.name}} </td>
+                <td class="text" mat-cell *matCellDef="let element"> 
+                    <p *ngIf="!editing || element.id != editingId">{{element.name}} </p>
+                    <input class="input-style" *ngIf="editing && element.id == editingId" placeholder="element.name" name="name" [(ngModel)]="editingname" >
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="username">
                 <th class="text" mat-header-cell *matHeaderCellDef> Userame </th>
-                <td class="text" mat-cell *matCellDef="let element"> {{element.username}} </td>
+                <td class="text" mat-cell *matCellDef="let element">
+                    <p *ngIf="!editing || element.id != editingId">{{element.username}} </p>
+                    <input class="input-style" *ngIf="editing && element.id == editingId" placeholder="Name" name="username" [(ngModel)]="editingusername" > 
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="created_at">
@@ -26,29 +32,30 @@
             <ng-container matColumnDef="update">
                 <th class="text" mat-header-cell *matHeaderCellDef> Edit </th>
                 <td class="text" mat-cell *matCellDef="let element"> 
-                    <mat-icon class="icons" fontIcon="edit">edit</mat-icon>
+                    <mat-icon *ngIf="!editing || element.id != editingId" (click)="editUser(element.id, element.name, element.username)"  class="icons" fontIcon="edit">edit</mat-icon>
+                    <mat-icon *ngIf="editing && element.id == editingId" (click)="editUser(element.id, element.name, element.username)"  class="icons" fontIcon="cancel">cancel</mat-icon>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="delete">
                 <th class="text" mat-header-cell *matHeaderCellDef> Delete </th>
                 <td class="text" mat-cell *matCellDef="let element"> 
-                    <mat-icon (click)="deleteOnClick(element.id)"  class="icons" fontIcon="delete_outline">delete_outline</mat-icon> 
+                    <mat-icon *ngIf="!editing || element.id != editingId" (click)="deleteOnClick(element.id)"  class="icons" fontIcon="delete_outline">delete_outline</mat-icon>
+                    <mat-icon *ngIf="editing && element.id == editingId" (click)="editAddUser(element.id, element.name, element.username)"  class="icons" fontIcon="add_circle">add_circle</mat-icon>
+                     
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
         <div class="new-user-row">
-            <form #userlogin = "ngForm" class="form-div" (ngSubmit)="submit()">
+            <form #userlogin = "ngForm" class="form-div">
                 <input placeholder="Name" name="name" [(ngModel)]="name" >
                 <input placeholder="Username" name="username" [(ngModel)]="username">
                 <input placeholder="Password" name="password" [(ngModel)]="password">
-                <input type = "submit" value = "submit">
             </form>
-           
             <div class="icon-div">
-                <mat-icon class="add-icon">add_circle</mat-icon>
+                <mat-icon class="add-icon" (click)="submit()">add_circle</mat-icon>
             </div>
         </div>
     </div>

@@ -54,12 +54,12 @@ font-weight: bold;
     box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
 }
 
-.add-icon{
-    transform: scale(2);
-}
 .icon-div{
     display: flex;
     margin: 2rem 2rem;
+}
+.add-icon{
+    transform: scale(2);
 }
 .add-icon:hover{
     transform: scale(2.05);
@@ -72,8 +72,16 @@ font-weight: bold;
 .new-user-row{
     display: flex;
     justify-content: space-between;
+    border-radius: 0rem 0rem 1rem 1rem ;
+}
+.new-user-row:hover{
+    border-color: black;
+    border-style: solid;
+    border-width: 0.1rem;
 }
 .form-div{
     display: flex;
+    justify-content: space-between;
     padding: 2rem;
+    width: 60%;
 }
