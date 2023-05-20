@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent {
-  title: string = 'Neves Crud Basico';
+  title: string = 'Neves CRUD Basico';
 }

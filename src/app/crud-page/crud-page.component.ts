@@ -11,13 +11,11 @@ import { Router } from '@angular/router';
 })
 export class CrudPageComponent {
 
-  jwt: any = null;
   dataSource: any = [];
   constructor(
     private http: HttpClient,
     private location: Location,
     private router: Router,) {
-    this.jwt = this.location.getState();
   }
   public displayedColumns = ['id', 'name', 'username', 'created_at', 'update', 'delete']
 
@@ -30,9 +28,8 @@ export class CrudPageComponent {
   editingname: string = ""
   editingusername: string = "";
   ngOnInit() {
-    var headers = { 'Authorization': `Bearer ${this.jwt["jwt"]}` }
 
-    this.http.get<any>(environment.apiUrl + '/users', { headers }).subscribe(data => {
+    this.http.get<any>(environment.apiUrl + '/users', { withCredentials: true }).subscribe(data => {
       this.dataSource = data;
       this.dataSource = this.dataSource.sort((a: any, b: any) => a.id - b.id )
     },
@@ -46,9 +43,7 @@ export class CrudPageComponent {
 
   }
   deleteOnClick(id: number) {
-    var headers = { 'Authorization': `Bearer ${this.jwt["jwt"]}` }
-
-    this.http.delete<any>(environment.apiUrl + '/users/id/' + id, { headers }).subscribe(e => {})
+    this.http.delete<any>(environment.apiUrl + '/users/id/' + id,  { withCredentials: true }).subscribe(e => {})
     window.location.reload();
   }
   editUser(id: number, name: string, username:string) {
@@ -63,9 +58,7 @@ export class CrudPageComponent {
       name: this.editingname,
       username: this.editingusername,
     }
-
-    var headers = { 'Authorization': `Bearer ${this.jwt["jwt"]}` }
-    this.http.patch<any>(environment.apiUrl+'/users/update', body, { headers: headers}).subscribe(
+    this.http.patch<any>(environment.apiUrl+'/users/update', body,  { withCredentials: true }).subscribe(
       data => {window.location.reload();},
       error => {alert("Something went wrong")});
     
@@ -82,8 +75,7 @@ export class CrudPageComponent {
       username: this.username,
       password: this.password
     }
-    var headers = { 'Authorization': `Bearer ${this.jwt["jwt"]}` }
-    this.http.post<any>(environment.apiUrl+'/users/create', body, { headers: headers}).subscribe(
+    this.http.post<any>(environment.apiUrl+'/users/create', body,  { withCredentials: true }).subscribe(
       data => {window.location.reload();},
       error => {alert("Something went wrong")});
       

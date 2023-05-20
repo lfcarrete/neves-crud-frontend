@@ -15,7 +15,6 @@ export class LoginFormComponent {
 
   username: string = "";
   password: string = "";
-  jwt_token: string = "";
   
   show: boolean = false;
   submit() {
@@ -24,9 +23,8 @@ export class LoginFormComponent {
       password: this.password
     }
 
-    this.http.post<any>(environment.apiUrl+'/users/login', body).subscribe(
+    this.http.post<any>(environment.apiUrl+'/users/login', body, { withCredentials: true }).subscribe(
       data => {
-        this.jwt_token = data["access_token"];
         this.goToCrud();
       },
       error => {alert("Username or Password are incorrect")});
@@ -39,6 +37,6 @@ export class LoginFormComponent {
   }
 
   goToCrud() {
-    this.router.navigate(['crud'],  {state: {jwt: this.jwt_token}});
+    this.router.navigate(['crud']);
   }
 }
