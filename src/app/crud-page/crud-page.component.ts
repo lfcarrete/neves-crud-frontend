@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment.prod';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { last } from 'rxjs';
 
 @Component({
   selector: 'app-crud-page',
@@ -17,15 +18,17 @@ export class CrudPageComponent {
     private location: Location,
     private router: Router,) {
   }
-  public displayedColumns = ['id', 'name', 'username', 'created_at', 'update', 'delete']
+  public displayedColumns = ['id', 'first_name', 'last_name', 'username', 'created_at', 'update', 'delete']
 
-  name: string = ""
+  first_name: string = "";
+  last_name: string = "";
   username: string = "";
   password: string = "";
 
   editing: boolean = false;
   editingId: number = 0;
-  editingname: string = ""
+  editing_first_name: string = ""
+  editing_last_name: string = ""
   editingusername: string = "";
   ngOnInit() {
 
@@ -46,16 +49,18 @@ export class CrudPageComponent {
     this.http.delete<any>(environment.apiUrl + '/users/id/' + id,  { withCredentials: true }).subscribe(e => {})
     window.location.reload();
   }
-  editUser(id: number, name: string, username:string) {
+  editUser(id: number, first_name: string, last_name: string, username:string) {
     this.editing = !this.editing;
     this.editingId = id;
-    this.editingname = name;
+    this.editing_first_name = first_name;
+    this.editing_last_name = last_name;
     this.editingusername = username;
   }
   editAddUser(id: number, name: string, username:string){
     const body = {
       id: id,
-      name: this.editingname,
+      first_name: this.editing_first_name,
+      last_name: this.editing_last_name,
       username: this.editingusername,
     }
     this.http.patch<any>(environment.apiUrl+'/users/update', body,  { withCredentials: true }).subscribe(
@@ -66,12 +71,13 @@ export class CrudPageComponent {
   }
 
   submit(){
-    if(this.name.length < 1 || this.username.length < 1 || this.password.length < 1){
+    if(this.first_name.length < 1 || this.last_name.length < 1 || this.username.length < 1 || this.password.length < 1){
       alert("All fields are required.");
       return 
     } 
     const body = {
-      name: this.name,
+      first_name: this.first_name,
+      last_name: this.last_name,
       username: this.username,
       password: this.password
     }

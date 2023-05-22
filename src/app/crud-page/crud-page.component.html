@@ -8,11 +8,19 @@
             </ng-container>
 
             <!-- Name Column -->
-            <ng-container matColumnDef="name">
-                <th class="text" mat-header-cell *matHeaderCellDef> Name </th>
+            <ng-container matColumnDef="first_name">
+                <th class="text" mat-header-cell *matHeaderCellDef> Fisrt Name </th>
                 <td class="text" mat-cell *matCellDef="let element"> 
-                    <p *ngIf="!editing || element.id != editingId">{{element.name}} </p>
-                    <input class="input-style" *ngIf="editing && element.id == editingId" placeholder="element.name" name="name" [(ngModel)]="editingname" >
+                    <p *ngIf="!editing || element.id != editingId">{{element.first_name}} </p>
+                    <input class="input-style" *ngIf="editing && element.id == editingId" placeholder="element.first_name" name="first_name" [(ngModel)]="editing_first_name" >
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="last_name">
+                <th class="text" mat-header-cell *matHeaderCellDef> Last Name </th>
+                <td class="text" mat-cell *matCellDef="let element"> 
+                    <p *ngIf="!editing || element.id != editingId">{{element.last_name}} </p>
+                    <input class="input-style" *ngIf="editing && element.id == editingId" placeholder="element.last_name" name="last_name" [(ngModel)]="editing_last_name" >
                 </td>
             </ng-container>
 
@@ -32,8 +40,8 @@
             <ng-container matColumnDef="update">
                 <th class="text" mat-header-cell *matHeaderCellDef> Edit </th>
                 <td class="text" mat-cell *matCellDef="let element"> 
-                    <mat-icon *ngIf="!editing || element.id != editingId" (click)="editUser(element.id, element.name, element.username)"  class="icons" fontIcon="edit">edit</mat-icon>
-                    <mat-icon *ngIf="editing && element.id == editingId" (click)="editUser(element.id, element.name, element.username)"  class="icons" fontIcon="cancel">cancel</mat-icon>
+                    <mat-icon *ngIf="!editing || element.id != editingId" (click)="editUser(element.id, element.first_name, element.last_name, element.username)"  class="icons" fontIcon="edit">edit</mat-icon>
+                    <mat-icon *ngIf="editing && element.id == editingId" (click)="editUser(element.id, element.first_name, element.last_name, element.username)"  class="icons" fontIcon="cancel">cancel</mat-icon>
                 </td>
             </ng-container>
 
@@ -50,7 +58,8 @@
         </table>
         <div class="new-user-row">
             <form #userlogin = "ngForm" class="form-div">
-                <input placeholder="Name" name="name" [(ngModel)]="name" >
+                <input placeholder="First Name" name="first_name" [(ngModel)]="first_name" >
+                <input placeholder="Last Name" name="last_name" [(ngModel)]="last_name" >
                 <input placeholder="Username" name="username" [(ngModel)]="username">
                 <input placeholder="Password" name="password" [(ngModel)]="password">
             </form>
